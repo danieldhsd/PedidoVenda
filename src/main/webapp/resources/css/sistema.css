@@ -70,7 +70,7 @@ h1 {
 .ui-tabs .ui-tabs-panel {
 	padding: 0.5em 0.2em !important;
 }
-
+	
 .ui-tabs {
 	padding: 0px !important;
 }
@@ -87,7 +87,7 @@ h1 {
 /* Customiza panelgrid - início */
 .ui-panelgrid>*>tr, .ui-panelgrid .ui-panelgrid-cell {
 	background: none !important;
-	border: none !important;
+	/*border: none !important;*/
 }
 /* Customiza panelgrid - fim */
 
