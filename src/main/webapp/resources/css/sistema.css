@@ -98,7 +98,7 @@ h1 {
 /* Customiza TabView - fim */
 
 /* Customiza panelgrid - início */
-.ui-panelgrid>*>tr, .ui-panelgrid .ui-panelgrid-cell {
+.ui-panelgrid > * > tr, .ui-panelgrid .ui-panelgrid-cell {
 	background: none !important;
 	/*border: none !important;*/
 }
@@ -111,15 +111,12 @@ h1 {
 	background: none !important;
 }
 
-.menu-sistema .ui-menu-parent>a .ui-menuitem-text, .menu-sistema>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
-	{
+.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
 	color: #ffffff !important;
 }
 
-/*
 .menu-sistema .ui-icon-triangle-1-s {
 	background: url(#{ resource [ 'images:seta-para-baixo.png' ]})no-repeat;
 }
-*/
 
 /* Menu sistema fim */ 
