@@ -2,25 +2,39 @@ package br.com.danieldhsd.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "CLIENTE")
 public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name = "NOME", nullable = false, length = 100)
 	private String nome;
+	
+	@Column(name = "EMAIL", nullable = false, length = 100)
 	private String email;
+	
+	@Column(name = "DOC_RECEITA_FEDERAL", nullable = false, length = 15)
 	private String documentoReceitaFederal;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TIPO_PESSOA", nullable = false, length = 15)
 	private TipoPessoa tipoPessoa;
 	
-	@Transient
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos;
 	
 	public Long getId() {
