@@ -17,81 +17,83 @@ import org.apache.commons.logging.LogFactory;
 
 import br.com.danieldhsd.service.NegocioException;
 
-public class JsfExceptionHandler extends ExceptionHandlerWrapper{
-	
+public class JsfExceptionHandler extends ExceptionHandlerWrapper {
+
 	private static Log log = LogFactory.getLog(JsfExceptionHandler.class);
-	
-    private ExceptionHandler wrapped;
 
-    public JsfExceptionHandler(ExceptionHandler wrapped) {
-        this.wrapped = wrapped;
-    }
+	private ExceptionHandler wrapped;
 
-    @Override
-    public ExceptionHandler getWrapped() {
-        return this.wrapped;
-    }
+	public JsfExceptionHandler(ExceptionHandler wrapped) {
+		this.wrapped = wrapped;
+	}
 
-    @Override
-    public void handle() throws FacesException {
-        Iterator<ExceptionQueuedEvent> events = getUnhandledExceptionQueuedEvents().iterator();
-        
-        while (events.hasNext()) {
-            ExceptionQueuedEvent event = events.next();
-            ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
+	@Override
+	public ExceptionHandler getWrapped() {
+		return this.wrapped;
+	}
 
-            //Recupera a exception
-            Throwable exception = context.getException();
-            
-            NegocioException negocioException = getNegocioException(exception);
-            
-            boolean handled = false;
+	@Override
+	public void handle() throws FacesException {
+		Iterator<ExceptionQueuedEvent> events = getUnhandledExceptionQueuedEvents().iterator();
+		while (events.hasNext()) {
+			ExceptionQueuedEvent event = events.next();
+			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
 
-            try {
-                if (exception instanceof ViewExpiredException) {
-                    handled = true;
-                	redirect("/"); 
-                } else if (negocioException != null) {
-                    handled = true;
-                    FacesUtil.addErrorMessage(negocioException.getMessage());
-                } else {
-                	handled = true;
-                	log.error("Erro de sistema: " + exception.getMessage(), exception);
-                	redirect("/Erro.xhtml");
-                }
-            } finally {
-            	if(handled) {
-            		events.remove();
-            	}
-            }
+			// Recupera a exception
+			Throwable exception = context.getException();
 
-            getWrapped().handle();
-        }
-    }
-    
-    //Desmonta as exceções para ver se á um NegocioException 
-    private NegocioException getNegocioException(Throwable exception) {
-        if (exception instanceof NegocioException) {
-            return (NegocioException) exception;
-        } else if (exception.getCause() != null) {
-            return getNegocioException(exception.getCause());
-        }
+			NegocioException negocioException = getNegocioException(exception);
 
-        return null;
-    }
-    
-    private void redirect(String page) {
-        try {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            ExternalContext externalContext = facesContext.getExternalContext();
-            String contextPath = externalContext.getRequestContextPath(); //Pega a Pasta do contexto
+			boolean handled = false; // tratado
 
-            externalContext.redirect(contextPath + page); //Redireciona para o caminho completo
-            facesContext.responseComplete(); //Evita outro processamento
+			/* Tratamento da Exception */
+			try {
+				if (exception instanceof ViewExpiredException) {
+					handled = true;
+					redirect("/"); // Redireciona para a Tela Inicial
 
-        } catch (IOException ex) {
-            throw new FacesException(ex);
-        }
-    }
-	
+				} else if (negocioException != null) { // Se for negócio exception
+					handled = true;
+					FacesUtil.addErrorMessage(negocioException.getMessage());
+				} else {
+					handled = true;
+					log.error("Erro de sistema: " + exception.getMessage(), exception); // Impl Apache commons logging
+
+					redirect("/erro.xhtml");
+				}
+			} finally {
+				if (handled) {
+					events.remove();
+				}
+			}
+
+			getWrapped().handle();
+		}
+	}
+
+	// Desmonta as exceções para ver se á um NegocioException
+	private NegocioException getNegocioException(Throwable exception) {
+		if (exception instanceof NegocioException) {
+			return (NegocioException) exception;
+		} else if (exception.getCause() != null) {
+			return getNegocioException(exception.getCause());
+		}
+
+		return null;
+	}
+
+	private void redirect(String page) {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			String contextPath = externalContext.getRequestContextPath(); // Pega a Pasta do contexto
+
+			externalContext.redirect(contextPath + page); // Redireciona para o caminho completo
+			facesContext.responseComplete(); // Evita outro processamento
+
+		} catch (IOException ex) {
+			throw new FacesException(ex);
+		}
+	}
+
 }
