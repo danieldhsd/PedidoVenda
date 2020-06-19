@@ -3,12 +3,37 @@ package br.com.danieldhsd.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USUARIO")
 public class Usuario {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "NOME", nullable = false, length = 80)
 	private String nome;
+
+	@Column(name = "EMAIL", nullable = false, unique = true, length = 80)
 	private String email;
+	
+	@Column(name = "SENHA", nullable = false, length = 20)
 	private String senha;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "USUARIO_GRUPO", joinColumns = @JoinColumn(name = "USUARIO_ID"),
+			inverseJoinColumns = @JoinColumn(name = "GRUPO_ID"))
 	private List<Grupo> grupos = new ArrayList<>();
 	
 	public Usuario() {}

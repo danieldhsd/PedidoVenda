@@ -1,12 +1,27 @@
 package br.com.danieldhsd.model;
 
-public class EnderecoEntrega {
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
+@Embeddable
+public class EnderecoEntrega {
+	
+	@Column(name = "ENTREGA_LOGRADOURO", nullable = false, length = 150)
 	private String logradouro;
+
+	@Column(name = "ENTREGA_NUMERO", nullable = false, length = 10)
 	private String numero;
+	
+	@Column(name = "ENTREGA_COMPLEMENTO", length = 50)
 	private String complemento;
+	
+	@Column(name = "ENTREGA_CIDADE", nullable = false, length = 50)
 	private String cidade;
+	
+	@Column(name = "ENTREGA_UF", nullable = false, length = 50)
 	private String uf;
+	
+	@Column(name = "ENTREGA_CEP", nullable = false, length = 9)
 	private String cep;
 	
 	public String getLogradouro() {

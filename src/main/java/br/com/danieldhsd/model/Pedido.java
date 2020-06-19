@@ -5,20 +5,67 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Pedido {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
+@Table(name = "PEDIDO")
+public class Pedido {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATA_CRIACAO", nullable = false)
 	private Date dataCriacao;
+	
+	@Column(columnDefinition = "text")
 	private String observacao;
-	private Date dataCriancao;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DATA_ENTREGA", nullable = false)
+	private Date dataEntrega;
+	
+	@Column(name = "VALOR_FRETE", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorFrete;
+	
+	@Column(name = "VALOR_DESCONTO", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorDesconto;
+	
+	@Column(name = "VALOR_TOTAL", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorTotal;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "STATUS_PEDIDO", nullable = false, length = 20)
 	private StatusPedido statusPedido;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "FORMA_PAGAMENTO", nullable = false, length = 20)
 	private FormaDePagamento formaDePagamento;
+	
+	@ManyToOne(optional = false)
 	private Usuario vendedor;
+	
+	@ManyToOne(optional = false)
 	private Cliente cliente;
+	
+	@Embedded
 	private EnderecoEntrega enderecoEntrega;
+	
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemPedido> itensPedido = new ArrayList<>();
 	
 	public Pedido() {}
@@ -45,14 +92,6 @@ public class Pedido {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public Date getDataCriancao() {
-		return dataCriancao;
-	}
-
-	public void setDataCriancao(Date dataCriancao) {
-		this.dataCriancao = dataCriancao;
 	}
 
 	public BigDecimal getValorFrete() {
@@ -150,6 +189,14 @@ public class Pedido {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Date getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
 	}
 	
 }

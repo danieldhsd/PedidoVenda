@@ -2,13 +2,37 @@ package br.com.danieldhsd.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "PRODUTO")
 public class Produto {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "NOME", nullable = false, length = 100)
 	private String nome;
+	
+	@Column(name = "SKU", nullable = false, length = 20, unique = true)
 	private String sku;
+
+	@Column(name = "VALOR_UNITARIO", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorUnitario;
+	
+	@Column(name = "QUANTIDADE_ESTOQUE", nullable = false, length = 5)
 	private Integer quantidadeEstoque;
+	
+	@ManyToOne
+	@JoinColumn(name = "CATEGORIA_ID", nullable = false)
 	private Categoria categoria;
 	
 	public Produto() {}

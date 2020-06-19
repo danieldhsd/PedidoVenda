@@ -1,9 +1,24 @@
 package br.com.danieldhsd.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Grupo")
 public class Grupo {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "NOME", nullable = false, length = 40)
 	private String nome;
+	
+	@Column(name = "DESCRICAO", nullable = false, length = 80)
 	private String descricao;
 	
 	public Grupo() {}
