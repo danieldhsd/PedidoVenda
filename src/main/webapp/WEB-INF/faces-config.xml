@@ -5,10 +5,5 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
     version="2.3">
 	
-	<factory>
-        <exception-handler-factory>
-            br.com.danieldhsd.util.jsf.JsfExceptionHandlerFactory
-        </exception-handler-factory>
-    </factory>
-    
+
 </faces-config>
