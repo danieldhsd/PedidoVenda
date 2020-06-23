@@ -59,7 +59,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 					handled = true;
 					log.error("Erro de sistema: " + exception.getMessage(), exception); // Impl Apache commons logging
 
-					redirect("/erro.xhtml");
+					redirect("/Erro.xhtml");
 				}
 			} finally {
 				if (handled) {

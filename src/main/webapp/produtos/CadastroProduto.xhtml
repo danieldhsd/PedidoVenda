@@ -12,6 +12,8 @@
 		
 			<h1>Novo Produto</h1>
 			
+			<p:messages closable="true"/>
+			
 			<p:toolbar style="margin-top: 20px;">
 				<p:toolbarGroup>
 					<p:button value="Novo" outcome="/produtos/CadastroProduto"/>
@@ -27,10 +29,10 @@
 						columnClasses="rotulo, campo">
 						
 				<p:outputLabel value="SKU" for="sku"/>
-				<p:inputText id="sku" size="20" maxlength="20"/>
+				<p:inputText id="sku" size="20" maxlength="20" value="#{cadastroProdutoController.produto.sku}"/>
 				
 				<p:outputLabel value="Nome" for="nome"/>
-				<p:inputText id="nome" size="60" maxlength="80"/>
+				<p:inputText id="nome" size="60" maxlength="100" value="#{cadastroProdutoController.produto.nome}"/>
 	
 				<p:outputLabel value="Categoria" for="categoria"/>
 				<p:selectOneMenu id="categoria">
@@ -38,15 +40,19 @@
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="SubCategoria" for="subcategoria"/>
-				<p:selectOneMenu id="subcategoria">
+				<p:selectOneMenu id="subcategoria" value="#{cadastroProdutoController.produto.categoria}">
 					<f:selectItem itemLabel="Selecione a subcategoria"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Valor Unitario" for="valorUnitario"/>
-				<p:inputText id="valorUnitario" size="10" maxlength="10" styleClass="moeda"/>
+				<p:inputText id="valorUnitario" size="10" maxlength="10" styleClass="moeda" 
+						value="#{cadastroProdutoController.produto.valorUnitario}">
+						<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+				</p:inputText>
 				
 				<p:outputLabel value="Estoque" for="estoque"/>
-				<p:inputText id="estoque" size="10" maxlength="4"/>
+				<p:inputText id="estoque" size="10" maxlength="5"
+					value="#{cadastroProdutoController.produto.quantidadeEstoque}"/>
 				
 			</p:panelGrid>
 		</h:form>

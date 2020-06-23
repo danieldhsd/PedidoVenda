@@ -2,25 +2,39 @@ package br.com.danieldhsd.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
 public class EnderecoEntrega {
 	
+	@NotBlank
+	@Size(max = 150)
 	@Column(name = "ENTREGA_LOGRADOURO", nullable = false, length = 150)
 	private String logradouro;
-
+	
+	@NotBlank
+	@Size(max = 10)
 	@Column(name = "ENTREGA_NUMERO", nullable = false, length = 10)
 	private String numero;
 	
+	@Size(max = 50)
 	@Column(name = "ENTREGA_COMPLEMENTO", length = 50)
 	private String complemento;
 	
+	@NotBlank
+	@Size(max = 50)
 	@Column(name = "ENTREGA_CIDADE", nullable = false, length = 50)
 	private String cidade;
 	
+	@NotBlank
+	@Size(max = 50)
 	@Column(name = "ENTREGA_UF", nullable = false, length = 50)
 	private String uf;
 	
+	@NotBlank
+	@Size(max = 9)
 	@Column(name = "ENTREGA_CEP", nullable = false, length = 9)
 	private String cep;
 	

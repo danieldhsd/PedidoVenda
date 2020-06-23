@@ -10,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "PRODUTO")
@@ -19,18 +25,24 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
+	@Size(max = 100)
 	@Column(name = "NOME", nullable = false, length = 100)
 	private String nome;
 	
+	@NotBlank
 	@Column(name = "SKU", nullable = false, length = 20, unique = true)
 	private String sku;
-
+	
+	@NotNull
 	@Column(name = "VALOR_UNITARIO", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorUnitario;
 	
+	@NotNull @Min(0) @Max(9999)
 	@Column(name = "QUANTIDADE_ESTOQUE", nullable = false, length = 5)
 	private Integer quantidadeEstoque;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CATEGORIA_ID", nullable = false)
 	private Categoria categoria;

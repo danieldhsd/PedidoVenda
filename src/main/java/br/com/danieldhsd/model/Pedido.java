@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PEDIDO")
@@ -28,6 +29,7 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_CRIACAO", nullable = false)
 	private Date dataCriacao;
@@ -35,30 +37,38 @@ public class Pedido {
 	@Column(columnDefinition = "text")
 	private String observacao;
 	
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_ENTREGA", nullable = false)
 	private Date dataEntrega;
 	
+	@NotNull
 	@Column(name = "VALOR_FRETE", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorFrete;
 	
+	@NotNull
 	@Column(name = "VALOR_DESCONTO", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorDesconto;
 	
+	@NotNull
 	@Column(name = "VALOR_TOTAL", nullable = false, precision = 10, scale = 2)
 	private BigDecimal valorTotal;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS_PEDIDO", nullable = false, length = 20)
 	private StatusPedido statusPedido;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "FORMA_PAGAMENTO", nullable = false, length = 20)
 	private FormaDePagamento formaDePagamento;
 	
+	@NotNull
 	@ManyToOne(optional = false)
 	private Usuario vendedor;
 	
+	@NotNull
 	@ManyToOne(optional = false)
 	private Cliente cliente;
 	
