@@ -9,9 +9,11 @@
 	
 	<ui:define name="corpo">
 		<h:form>
-		
-			<h1>Novo Pedido</h1>
 			
+			<h1>Novo Pedido</h1>
+			<p:messages>
+				<p:autoUpdate/>
+			</p:messages>
 			<ui:include src="/WEB-INF/template/pedidos/BotoesPedido.xhtml" />
 
 			<ui:include src="/WEB-INF/template/pedidos/CapaPedido.xhtml" />

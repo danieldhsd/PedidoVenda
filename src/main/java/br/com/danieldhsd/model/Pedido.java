@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -78,6 +79,11 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemPedido> itensPedido = new ArrayList<>();
 	
+	@Transient
+    public BigDecimal getValorSubtotal() {
+		return BigDecimal.ONE;
+    }
+
 	public Pedido() {}
 
 	public Long getId() {
