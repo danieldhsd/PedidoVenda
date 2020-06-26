@@ -12,7 +12,7 @@
 		
 			<h1>Novo Produto</h1>
 			
-			<p:messages id="messages" showDetail="true" closable="true">
+			<p:messages id="messages" closable="true">
 				<p:autoUpdate/>
 			</p:messages>
 			
@@ -31,7 +31,7 @@
 						columnClasses="rotulo, campo">
 						
 				<p:outputLabel value="SKU" for="sku"/>
-				<p:inputText id="sku" size="20" maxlength="20" value="#{cadastroProdutoController.produto.sku}"/>
+				<p:inputText id="sku" size="18" maxlength="18" value="#{cadastroProdutoController.produto.sku}"/>
 				
 				<p:outputLabel value="Nome" for="nome"/>
 				<p:inputText id="nome" size="60" maxlength="100" value="#{cadastroProdutoController.produto.nome}"/>
