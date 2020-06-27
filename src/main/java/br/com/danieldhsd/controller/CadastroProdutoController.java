@@ -3,11 +3,9 @@ package br.com.danieldhsd.controller;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 import br.com.danieldhsd.model.Categoria;
 import br.com.danieldhsd.model.Produto;
@@ -26,10 +24,8 @@ public class CadastroProdutoController implements Serializable{
 	
 	private Produto produto;
 	
-	@PostConstruct
-	public void init() {
+	public CadastroProdutoController() {
 		produto = new Produto();
-		inicializar();
 	}
 
 	public void inicializar() {
