@@ -11,15 +11,16 @@ import javax.persistence.EntityManager;
 
 import br.com.danieldhsd.model.Categoria;
 import br.com.danieldhsd.model.Produto;
+import br.com.danieldhsd.repository.CategoriasRepository;
 
 @Named
 @ViewScoped
 public class CadastroProdutoController implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
-	private EntityManager manager;
+	private CategoriasRepository categoriasRepository;
 	
 	private List<Categoria> categoriasRaizes;
 	
@@ -32,8 +33,7 @@ public class CadastroProdutoController implements Serializable{
 	}
 
 	public void inicializar() {
-		categoriasRaizes = manager.createQuery("from Categoria", Categoria.class)
-							.getResultList();
+		categoriasRaizes = categoriasRepository.buscarRaizes();
 	}
 	
 	public Produto getProduto() {
