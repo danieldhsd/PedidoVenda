@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import br.com.danieldhsd.model.Categoria;
 import br.com.danieldhsd.model.Produto;
@@ -24,6 +25,9 @@ public class CadastroProdutoController implements Serializable{
 	
 	private Produto produto;
 	
+	@NotNull
+	private Categoria categoriaPai;
+	
 	public CadastroProdutoController() {
 		produto = new Produto();
 	}
@@ -32,12 +36,22 @@ public class CadastroProdutoController implements Serializable{
 		categoriasRaizes = categoriasRepository.buscarRaizes();
 	}
 	
+	public void salvar() {}
+	
 	public Produto getProduto() {
 		return produto;
 	}
 
 	public List<Categoria> getCategoriasRaizes() {
 		return categoriasRaizes;
+	}
+
+	public Categoria getCategoriaPai() {
+		return categoriaPai;
+	}
+
+	public void setCategoriaPai(Categoria categoriaPai) {
+		this.categoriaPai = categoriaPai;
 	}
 
 }
