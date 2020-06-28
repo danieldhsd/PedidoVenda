@@ -1,6 +1,7 @@
 package br.com.danieldhsd.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import br.com.danieldhsd.model.Categoria;
 import br.com.danieldhsd.model.Produto;
 import br.com.danieldhsd.repository.CategoriasRepository;
+import br.com.danieldhsd.service.CadastroProdutoService;
 import br.com.danieldhsd.util.jsf.FacesUtil;
 
 @Named
@@ -22,6 +24,9 @@ public class CadastroProdutoController implements Serializable{
 	@Inject
 	private CategoriasRepository categoriasRepository;
 	
+	@Inject
+	private CadastroProdutoService cadastroProdutoService;
+	
 	private List<Categoria> categoriasRaizes;
 	private List<Categoria> subCategoria;
 	
@@ -31,7 +36,7 @@ public class CadastroProdutoController implements Serializable{
 	private Categoria categoriaPai;
 	
 	public CadastroProdutoController() {
-		produto = new Produto();
+		limpar();
 	}
 
 	public void inicializar() {
@@ -43,7 +48,17 @@ public class CadastroProdutoController implements Serializable{
 		subCategoria = categoriasRepository.buscarSubcategorias(categoriaPai);
 	}
 	
-	public void salvar() {}
+	public void salvar() {
+		cadastroProdutoService.salvar(produto);
+		limpar();
+		FacesUtil.addInfoMessage("Produto salvo com sucesso!");
+	}
+	
+	private void limpar() {
+		produto = new Produto();
+		categoriaPai = null;
+		subCategoria = new ArrayList<Categoria>();
+	}
 	
 	public Produto getProduto() {
 		return produto;
