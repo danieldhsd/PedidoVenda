@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.com.danieldhsd.model.Produto;
 import br.com.danieldhsd.repository.ProdutosRepository;
+import br.com.danieldhsd.util.jpa.Transactional;
 
 public class CadastroProdutoService implements Serializable{
 
@@ -14,6 +15,7 @@ public class CadastroProdutoService implements Serializable{
 	@Inject
 	ProdutosRepository produtosRepository;
 	
+	@Transactional
 	public Produto salvar(Produto produto) {
 		Produto produtoExistente = produtosRepository.buscarPorSKU(produto.getSku());
 		

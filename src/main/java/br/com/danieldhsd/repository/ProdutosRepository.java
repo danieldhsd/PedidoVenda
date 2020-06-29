@@ -16,16 +16,7 @@ public class ProdutosRepository implements Serializable {
 	private EntityManager manager;
 
 	public Produto guardar(Produto produto) {
-		try {
-			manager.getTransaction().begin();
-			produto = manager.merge(produto);
-			manager.getTransaction().commit();
-		} catch (Exception e) {
-			manager.getTransaction().rollback();
-			e.printStackTrace();
-		}
-		
-		return produto;
+		return manager.merge(produto);
 	}
 	
 	public Produto buscarPorSKU(String sku) {
