@@ -1,26 +1,43 @@
 package br.com.danieldhsd.controller;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
-@RequestScoped
-public class PesquisaProdutosController {
+import br.com.danieldhsd.model.Produto;
+import br.com.danieldhsd.repository.ProdutosRepository;
+import br.com.danieldhsd.repository.filter.ProdutoFilter;
+
+@Named
+@ViewScoped
+public class PesquisaProdutosController implements Serializable {
 	
-	private List<Integer> produtosFiltrados;
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private ProdutosRepository produtosRepository;
+	
+	private ProdutoFilter produtoFilter;
+	
+	private List<Produto> produtosFiltrados;
 	
 	public PesquisaProdutosController() {
-		produtosFiltrados = new ArrayList<>();
-		for (int i = 0; i < 50; i++) {
-			produtosFiltrados.add(i);
-		}
+		produtoFilter = new ProdutoFilter();
 	}
 	
-	public List<Integer> getProdutosFiltrados() {
+	public void pesquisar() {
+		produtosFiltrados = produtosRepository.filtrados(produtoFilter);
+	}
+	
+	public List<Produto> getProdutosFiltrados() {
 		return produtosFiltrados;
+	}
+
+	public ProdutoFilter getProdutoFilter() {
+		return produtoFilter;
 	}
 
 }
