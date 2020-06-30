@@ -58,6 +58,14 @@
 		<scope>compile</scope>
   	</dependency>
   	
+  	<!-- OmniFaces (utilitarios para JSF) -->
+  	<dependency>
+  		<groupId>org.omnifaces</groupId>
+  		<artifactId>omnifaces</artifactId>
+  		<version>1.5</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	
   	<!-- PrimeFaces (biblioteca de componentes) -->
 	<dependency>
 		<groupId>org.primefaces</groupId>

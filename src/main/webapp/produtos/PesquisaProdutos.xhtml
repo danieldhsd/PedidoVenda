@@ -64,7 +64,9 @@
 				</p:column>
 				
 				<p:column style="text-align: center; width: 100px;">
-					<p:button icon="ui-icon-pencil" title="Editar"/>
+					<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
+						<f:param name="produto" value="#{produto.id}"/>
+					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir">
 						<p:confirm header="Exclusão de Produto" message="Tem certeza que deseja exluir este produto?"/>
 					</p:commandButton>

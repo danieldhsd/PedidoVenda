@@ -40,8 +40,13 @@ public class CadastroProdutoController implements Serializable{
 	}
 
 	public void inicializar() {
-		if(FacesUtil.isNotPostBack())
+		if(FacesUtil.isNotPostBack()) {
 			categoriasRaizes = categoriasRepository.buscarRaizes();
+			
+			if(this.categoriaPai != null) {
+				carregarSubcategorias();
+			}
+		}
 	}
 	
 	public void carregarSubcategorias() {
@@ -58,6 +63,10 @@ public class CadastroProdutoController implements Serializable{
 		produto = new Produto();
 		categoriaPai = null;
 		subCategoria = new ArrayList<Categoria>();
+	}
+	
+	public boolean isEditando() {
+		return this.produto.getId() != null;
 	}
 	
 	public Produto getProduto() {
@@ -78,6 +87,10 @@ public class CadastroProdutoController implements Serializable{
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+		
+		if(this.produto != null) {
+			this.categoriaPai = this.produto.getCategoria().getCategoriaPai();
+		}
 	}
 
 	public List<Categoria> getSubCategoria() {
