@@ -1,27 +1,54 @@
 package br.com.danieldhsd.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
-@RequestScoped
-public class PesquisaPedidosController {
+import br.com.danieldhsd.model.Pedido;
+import br.com.danieldhsd.model.StatusPedido;
+import br.com.danieldhsd.repository.PedidosRepository;
+import br.com.danieldhsd.repository.filter.PedidoFilter;
+
+@Named
+@ViewScoped
+public class PesquisaPedidosController implements Serializable {
 	
-	private List<Integer> pedidosFiltrados;
-
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private PedidosRepository pedidosRepository;
+	
+	private PedidoFilter filtro;
+	
+	private List<Pedido> pedidosFiltrados;
+	
 	public PesquisaPedidosController() {
-		pedidosFiltrados = new ArrayList<>();
-		
-		for (int i = 0; i < 50; i++) {
-			pedidosFiltrados.add(i);
-		}
+		this.filtro = new PedidoFilter();
+		this.pedidosFiltrados = new ArrayList<Pedido>();
 	}
 
-	public List<Integer> getPedidosFiltrados() {
+	public void pesquisar() {
+		pedidosFiltrados = pedidosRepository.filtrados(filtro);
+	}
+	
+	public StatusPedido[] getStatuses() {
+		return StatusPedido.values();
+	}
+	
+	public List<Pedido> getPedidosFiltrados() {
 		return pedidosFiltrados;
 	}
-	
+
+	public PedidoFilter getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(PedidoFilter filtro) {
+		this.filtro = filtro;
+	}
+
 }
