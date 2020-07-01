@@ -52,6 +52,10 @@ public class CadastroPedidoController {
 		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
 	}
 	
+	public boolean isEditando() {
+		return this.pedido.getId() != null;
+	}
+	
 	public List<Cliente> completarClientes(String nome){
 		return this.clientes.buscarPorNome(nome);
 	}
@@ -66,6 +70,10 @@ public class CadastroPedidoController {
 
 	public List<Usuario> getVendedores() {
 		return vendedores;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 	
 }
