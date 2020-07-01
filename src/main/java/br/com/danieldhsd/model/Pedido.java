@@ -45,20 +45,20 @@ public class Pedido {
 	
 	@NotNull
 	@Column(name = "VALOR_FRETE", nullable = false, precision = 10, scale = 2)
-	private BigDecimal valorFrete;
+	private BigDecimal valorFrete = BigDecimal.ZERO;
 	
 	@NotNull
 	@Column(name = "VALOR_DESCONTO", nullable = false, precision = 10, scale = 2)
-	private BigDecimal valorDesconto;
+	private BigDecimal valorDesconto = BigDecimal.ZERO;
 	
 	@NotNull
 	@Column(name = "VALOR_TOTAL", nullable = false, precision = 10, scale = 2)
-	private BigDecimal valorTotal;
+	private BigDecimal valorTotal = BigDecimal.ZERO;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS_PEDIDO", nullable = false, length = 20)
-	private StatusPedido statusPedido;
+	private StatusPedido statusPedido = StatusPedido.ORCAMENTO;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -180,6 +180,16 @@ public class Pedido {
 
 	public void setItensPedido(List<ItemPedido> itensPedido) {
 		this.itensPedido = itensPedido;
+	}
+	
+	@Transient
+	public boolean isNovo() {
+		return getId() == null;
+	}
+	
+	@Transient
+	public boolean isExistente() {
+		return !isNovo();
 	}
 
 	@Override

@@ -5,13 +5,16 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<f:metadata>
+		<f:event listener="#{cadastroPedidoController.inicializar()}" type="preRenderView"/>
+	</f:metadata>
+
 	<ui:define name="titulo">Novo Pedido</ui:define>
 	
 	<ui:define name="corpo">
 		<h:form>
-			
 			<h1>Novo Pedido</h1>
-			<p:messages>
+			<p:messages closable="true">
 				<p:autoUpdate/>
 			</p:messages>
 			<ui:include src="/WEB-INF/template/pedidos/BotoesPedido.xhtml" />
@@ -19,10 +22,11 @@
 			<ui:include src="/WEB-INF/template/pedidos/CapaPedido.xhtml" />
 			
 			<p:tabView style="margin-top: 20px;">
+			<!-- 
 				<p:tab title="Itens">
 					<ui:include src="/WEB-INF/template/pedidos/ItensPedido.xhtml" />
 				</p:tab>
-				
+			 -->	
 				<p:tab title="Dados de Entrega">
 					<ui:include src="/WEB-INF/template/pedidos/DadosEntregaPedido.xhtml" />
 				</p:tab>

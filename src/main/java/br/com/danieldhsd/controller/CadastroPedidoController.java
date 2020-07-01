@@ -1,41 +1,71 @@
 package br.com.danieldhsd.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.danieldhsd.model.Cliente;
 import br.com.danieldhsd.model.EnderecoEntrega;
+import br.com.danieldhsd.model.FormaDePagamento;
 import br.com.danieldhsd.model.Pedido;
+import br.com.danieldhsd.model.Usuario;
+import br.com.danieldhsd.repository.ClientesRepository;
+import br.com.danieldhsd.repository.UsuariosRepository;
+import br.com.danieldhsd.service.CadastroPedidoService;
+import br.com.danieldhsd.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
 public class CadastroPedidoController {
 	
+	@Inject
+	private UsuariosRepository usuarios;
+	
+	@Inject
+	private ClientesRepository clientes;
+	
+	private CadastroPedidoService cadastroPedidoService;
+	
 	private Pedido pedido;
+	private List<Usuario> vendedores;
 	
-	private List<Integer> itens;
+	public CadastroPedidoController() {
+		limpar();
+	}
 	
-	@PostConstruct
-	public void init() {
+	public void inicializar() {
+		if(FacesUtil.isNotPostBack()) {
+			this.vendedores = this.usuarios.buscarVendedores();
+		}
+	}
+	
+	public void limpar() {
 		pedido = new Pedido();
 		pedido.setEnderecoEntrega(new EnderecoEntrega());
 	}
 	
-	public void salvar() {}
+	public void salvar() {
+		this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+		
+		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+	}
 	
-	public CadastroPedidoController() {
-		itens = new ArrayList<Integer>();
-		itens.add(1);
+	public List<Cliente> completarClientes(String nome){
+		return this.clientes.buscarPorNome(nome);
 	}
-	public List<Integer> getItens() {
-		return itens;
+	
+	public FormaDePagamento[] getFormasDePagamento() {
+		return FormaDePagamento.values();
 	}
-
+	
 	public Pedido getPedido() {
 		return pedido;
+	}
+
+	public List<Usuario> getVendedores() {
+		return vendedores;
 	}
 	
 }
