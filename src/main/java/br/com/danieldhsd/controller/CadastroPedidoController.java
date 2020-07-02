@@ -38,6 +38,8 @@ public class CadastroPedidoController {
 	public void inicializar() {
 		if(FacesUtil.isNotPostBack()) {
 			this.vendedores = this.usuarios.buscarVendedores();
+			
+			this.recalcularPedido();
 		}
 	}
 	
@@ -58,6 +60,12 @@ public class CadastroPedidoController {
 	
 	public List<Cliente> completarClientes(String nome){
 		return this.clientes.buscarPorNome(nome);
+	}
+	
+	public void recalcularPedido() {
+		if (this.pedido != null) {
+			this.pedido.recalcularValorTotal();
+		}
 	}
 	
 	public FormaDePagamento[] getFormasDePagamento() {

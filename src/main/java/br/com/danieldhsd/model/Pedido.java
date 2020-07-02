@@ -11,6 +11,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -76,13 +77,26 @@ public class Pedido {
 	@Embedded
 	private EnderecoEntrega enderecoEntrega;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
 	private List<ItemPedido> itensPedido = new ArrayList<>();
 	
 	@Transient
     public BigDecimal getValorSubtotal() {
-		return BigDecimal.ONE;
+		return this.getValorTotal().subtract(this.getValorFrete()).add(this.getValorDesconto());
     }
+	
+	public void recalcularValorTotal() {
+		BigDecimal total = BigDecimal.ZERO;
+		total = total.add(getValorFrete()).subtract(getValorDesconto());
+		
+		for (ItemPedido item : 	this.getItensPedido()) {
+			if(item.getProduto() != null && item.getProduto().getId() != null) {
+				total = total.add(item.getValorTotal());
+			}
+		}
+		
+		this.setValorTotal(total);
+	}
 
 	public Pedido() {}
 

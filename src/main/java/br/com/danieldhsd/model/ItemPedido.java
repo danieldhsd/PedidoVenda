@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITEM_PEDIDO")
@@ -29,6 +30,11 @@ public class ItemPedido {
 
 	@ManyToOne(optional = false)
 	private Pedido pedido;
+	
+	@Transient
+	public BigDecimal getValorTotal() {
+		return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+	}
 	
 	public ItemPedido() {}
 	

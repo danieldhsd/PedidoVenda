@@ -39,8 +39,11 @@
 		</p:selectOneMenu>
 		
 		<p:outputLabel value="Valor do Frete" for="valorDoFrete"/>
-		<p:inputText id="valorDoFrete" maxlength="10" value="#{cadastroPedidoController.pedido.valorFrete}">
+		<p:inputText id="valorDoFrete" maxlength="10" styleClass="moeda"
+			value="#{cadastroPedidoController.pedido.valorFrete}">
 			<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+			<p:ajax event="change" process="@this" update="totalPedido"
+				listener="#{cadastroPedidoController.recalcularPedido}"/>
 		</p:inputText>
 		
 		<p:outputLabel value="SubTotal" for="subTotal" style="font-weight: bold"/>
@@ -53,6 +56,9 @@
 		<p:inputText id="valorDeDesconto" size="10" maxlength="10" 
 				value="#{cadastroPedidoController.pedido.valorDesconto}" styleClass="moeda">
 			<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+			
+			<p:ajax event="change" process="@this" update="totalPedido"
+				listener="#{cadastroPedidoController.recalcularPedido}"/>
 		</p:inputText>
 		
 		<p:outputLabel value="Total Pedido" style="font-weight: bold; font-size: 1.1em"/>
