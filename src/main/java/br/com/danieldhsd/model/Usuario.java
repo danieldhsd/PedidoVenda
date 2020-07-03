@@ -1,5 +1,6 @@
 package br.com.danieldhsd.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USUARIO")
-public class Usuario {
+public class Usuario implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

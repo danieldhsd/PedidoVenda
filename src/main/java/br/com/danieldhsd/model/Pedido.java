@@ -1,5 +1,6 @@
 package br.com.danieldhsd.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,8 +26,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "PEDIDO")
-public class Pedido {
+public class Pedido implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -96,6 +99,23 @@ public class Pedido {
 		}
 		
 		this.setValorTotal(total);
+	}
+	
+	public void adicionarItemVazio() {
+		if(this.isOrcamento()) {
+			Produto produto = new Produto();
+			
+			ItemPedido item = new ItemPedido();
+			item.setProduto(produto);
+			item.setPedido(this);
+			
+			this.getItensPedido().add(0, item);
+		}
+	}
+	
+	@Transient
+	public boolean isOrcamento() {
+		return StatusPedido.ORCAMENTO.equals(this.getStatusPedido());
 	}
 
 	public Pedido() {}

@@ -1,5 +1,7 @@
 package br.com.danieldhsd.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
@@ -7,8 +9,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
-public class EnderecoEntrega {
+public class EnderecoEntrega implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@NotBlank
 	@Size(max = 150)
 	@Column(name = "ENTREGA_LOGRADOURO", nullable = false, length = 150)

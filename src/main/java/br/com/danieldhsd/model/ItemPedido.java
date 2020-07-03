@@ -1,5 +1,6 @@
 package br.com.danieldhsd.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -13,20 +14,22 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ITEM_PEDIDO")
-public class ItemPedido {
+public class ItemPedido implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "QUANTIDADE", nullable = false, length = 3)
-	private Integer quantidade;
+	private Integer quantidade = 1;
 	
 	@Column(name = "VALOR_UNITARIO", nullable = false, precision = 10, scale = 2)
-	private BigDecimal valorUnitario;
+	private BigDecimal valorUnitario = BigDecimal.ZERO;
 	
 	@ManyToOne(optional = false)
-	private Produto produto;
+	private Produto produto = new Produto();
 
 	@ManyToOne(optional = false)
 	private Pedido pedido;
@@ -34,6 +37,11 @@ public class ItemPedido {
 	@Transient
 	public BigDecimal getValorTotal() {
 		return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+	}
+	
+	@Transient
+	public boolean isProdutoAssociado() {
+		return this.getProduto() != null && this.getProduto().getId() != null;
 	}
 	
 	public ItemPedido() {}
@@ -88,6 +96,10 @@ public class ItemPedido {
 
 	public Pedido getPedido() {
 		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 	
 }
