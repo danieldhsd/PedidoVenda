@@ -76,9 +76,15 @@ public class CadastroPedidoController implements Serializable {
 	}
 	
 	public void salvar() {
-		this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+		this.pedido.removerItemVazio();
 		
-		FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+		try {
+			this.pedido = this.cadastroPedidoService.salvar(this.pedido);
+			
+			FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
+		} finally {
+			this.pedido.adicionarItemVazio();
+		}
 	}
 	
 	public boolean isEditando() {

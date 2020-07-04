@@ -258,5 +258,18 @@ public class Pedido implements Serializable {
 	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
+
+	public void removerItemVazio() {
+		ItemPedido item = this.getItensPedido().get(0);
+		
+		if(item != null && item.getProduto().getId() == null) {
+			this.getItensPedido().remove(item);
+		}
+	}
+	
+	@Transient
+	public boolean isValorTotalNegativo() {
+		return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
+	}
 	
 }
