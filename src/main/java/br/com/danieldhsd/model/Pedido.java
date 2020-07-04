@@ -88,6 +88,26 @@ public class Pedido implements Serializable {
 		return this.getValorTotal().subtract(this.getValorFrete()).add(this.getValorDesconto());
     }
 	
+	@Transient
+	public boolean isNovo() {
+		return getId() == null;
+	}
+	
+	@Transient
+	public boolean isExistente() {
+		return !isNovo();
+	}
+	
+	@Transient
+	public boolean isValorTotalNegativo() {
+		return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
+	}
+	
+	@Transient
+	public boolean isEmitido() {
+		return StatusPedido.EMITIDO.equals(this.getStatusPedido());
+	}
+	
 	public void recalcularValorTotal() {
 		BigDecimal total = BigDecimal.ZERO;
 		total = total.add(getValorFrete()).subtract(getValorDesconto());
@@ -110,6 +130,14 @@ public class Pedido implements Serializable {
 			item.setPedido(this);
 			
 			this.getItensPedido().add(0, item);
+		}
+	}
+	
+	public void removerItemVazio() {
+		ItemPedido item = this.getItensPedido().get(0);
+		
+		if(item != null && item.getProduto().getId() == null) {
+			this.getItensPedido().remove(item);
 		}
 	}
 	
@@ -216,16 +244,6 @@ public class Pedido implements Serializable {
 		this.itensPedido = itensPedido;
 	}
 	
-	@Transient
-	public boolean isNovo() {
-		return getId() == null;
-	}
-	
-	@Transient
-	public boolean isExistente() {
-		return !isNovo();
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -259,17 +277,4 @@ public class Pedido implements Serializable {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public void removerItemVazio() {
-		ItemPedido item = this.getItensPedido().get(0);
-		
-		if(item != null && item.getProduto().getId() == null) {
-			this.getItensPedido().remove(item);
-		}
-	}
-	
-	@Transient
-	public boolean isValorTotalNegativo() {
-		return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
-	}
-	
 }

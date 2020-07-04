@@ -44,6 +44,17 @@ public class ItemPedido implements Serializable {
 		return this.getProduto() != null && this.getProduto().getId() != null;
 	}
 	
+	@Transient
+	public boolean isEstoqueSuficiente() {
+		return this.getPedido().isEmitido() || this.getProduto().getId() == null
+				|| this.getProduto().getQuantidadeEstoque() >= this.getQuantidade();
+	}
+	
+	@Transient
+	public boolean isEstoqueInsuficiente() {
+		return !this.isEstoqueSuficiente();
+	}
+	
 	public ItemPedido() {}
 	
 	public Long getId() {
