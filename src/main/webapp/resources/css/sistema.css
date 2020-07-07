@@ -95,6 +95,10 @@ h1 {
 .ui-tabs.ui-tabs-top > .ui-tabs-nav {
 	padding: 0px !important;
 }
+
+.ui-state-disabled {
+	opacity: .80 !important;
+}
 /* Customiza TabView - fim */
 
 /* Customiza panelgrid - início */
