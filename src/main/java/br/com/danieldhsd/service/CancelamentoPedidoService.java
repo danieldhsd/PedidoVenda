@@ -9,13 +9,10 @@ import br.com.danieldhsd.model.StatusPedido;
 import br.com.danieldhsd.repository.PedidosRepository;
 import br.com.danieldhsd.util.jpa.Transactional;
 
-public class EmissaoPedidoService implements Serializable {
-
+public class CancelamentoPedidoService implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private CadastroPedidoService cadastroPedidoService;
-	
 	@Inject
 	private PedidosRepository pedidos;
 	
@@ -23,17 +20,19 @@ public class EmissaoPedidoService implements Serializable {
 	private EstoqueService estoqueService;
 	
 	@Transactional
-	public Pedido emitir(Pedido pedido) {
-		pedido = this.cadastroPedidoService.salvar(pedido);
+	public Pedido cancelar(Pedido pedido) {
+		pedido = this.pedidos.buscarPorId(pedido.getId());
 		
-		if(pedido.isNaoEmissivel()) {
-			throw new NegocioException("Pedido não pode ser emitido com o status " 
-					+ pedido.getStatusPedido().getDescricao() + ".");
+		if(pedido.isNaoCancelavel()) {
+			throw new NegocioException("Pedido nao pode ser cancelado no status "
+							+ pedido.getStatusPedido().getDescricao() + ".");
 		}
 		
-		this.estoqueService.baixarItensEstoque(pedido);
+		if(pedido.isEmitido()) {
+			this.estoqueService.retornarItensEstoque(pedido);
+		}
 		
-		pedido.setStatusPedido(StatusPedido.EMITIDO);
+		pedido.setStatusPedido(StatusPedido.CANCELADO);
 		
 		pedido = this.pedidos.guardar(pedido);
 		
