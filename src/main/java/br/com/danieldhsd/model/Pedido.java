@@ -104,6 +104,16 @@ public class Pedido implements Serializable {
 	}
 	
 	@Transient
+	public boolean isNaoEmissivel() {
+		return !this.isEmissivel();
+	}
+
+	@Transient
+	public boolean isEmissivel() {
+		return this.isExistente() && this.isOrcamento();
+	}
+	
+	@Transient
 	public boolean isEmitido() {
 		return StatusPedido.EMITIDO.equals(this.getStatusPedido());
 	}
@@ -276,5 +286,5 @@ public class Pedido implements Serializable {
 	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
-
+	
 }

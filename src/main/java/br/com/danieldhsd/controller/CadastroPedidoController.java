@@ -3,6 +3,8 @@ package br.com.danieldhsd.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,6 +43,8 @@ public class CadastroPedidoController implements Serializable {
 	@Inject
 	private CadastroPedidoService cadastroPedidoService;
 	
+	@Produces
+	@PedidoEdicao
 	private Pedido pedido;
 	
 	private Produto produtoLinhaEditavel;
@@ -68,6 +72,10 @@ public class CadastroPedidoController implements Serializable {
 			this.produtoLinhaEditavel = this.produtos.buscarPorSKU(sku);
 			this.carregarProdutoLinhaEditavel();
 		}
+	}
+	
+	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
+		this.pedido = event.getPedido();
 	}
 	
 	public void limpar() {
