@@ -308,8 +308,13 @@ public class Pedido implements Serializable {
 	}
 
 	@Transient
-	private boolean isAlteravel() {
+	public boolean isAlteravel() {
 		return this.isOrcamento();
+	}
+	
+	@Transient
+	public boolean isNaoEnviavelPorEmail() {
+		return this.isNovo() || this.isCancelado();
 	}
 	
 }
