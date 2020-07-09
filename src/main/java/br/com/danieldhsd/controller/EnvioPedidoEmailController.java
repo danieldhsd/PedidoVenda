@@ -3,7 +3,6 @@ package br.com.danieldhsd.controller;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,6 +27,11 @@ public class EnvioPedidoEmailController implements Serializable {
 	
 	public void enviarPedido() {
 		MailMessage message = mailer.novaMensagem();
+		
+		message.to(this.pedido.getCliente().getEmail())
+			.subject("Pedido " + this.pedido.getId())
+			.bodyHtml("<strong>Valor total:</strong> " + this.pedido.getValorTotal())
+			.send();
 		
 		FacesUtil.addInfoMessage("Pedido enviado por e-mail com sucesso!");
 	}
