@@ -1,7 +1,5 @@
 package br.com.danieldhsd.security;
 
-import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
